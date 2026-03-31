@@ -1,0 +1,13 @@
+faster-whisper
+deepface
+tf-keras
+mediapipe
+protobuf<5
+opencv-python
+ffmpeg-python
+numpy
+pandas
+tqdm
+fastapi
+uvicorn
+python-multipart

@@ -10,107 +10,137 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body data-theme="dark">
-    <div class="page-shell">
-        <header class="topbar">
+    <div class="app-layout">
+        <aside class="sidebar">
             <div>
-                <p class="eyebrow">Offline Multimodal Analysis</p>
-                <h1>Video Intelligence Dashboard</h1>
-                <p class="subtitle">Upload a video, keep it playing locally, and watch the timeline populate after analysis.</p>
+                <p class="eyebrow">MVIS</p>
+                <h2 class="sidebar-title">Control Panel</h2>
+                <p class="sidebar-copy"></p>
             </div>
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Light Mode</button>
-        </header>
+            <nav class="sidebar-nav">
+                <a class="nav-link active" href="/">Video Workspace</a>
+                <a class="nav-link" href="/analytics" target="_blank" rel="noreferrer">Analytics Window</a>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle sidebar-theme" type="button" aria-label="Toggle theme">Light Mode</button>
+        </aside>
 
-        <main class="layout-grid">
-            <section class="panel panel-primary">
-                <div class="panel-header">
-                    <div>
-                        <p class="section-kicker">Input</p>
-                        <h2>Video Workspace</h2>
-                    </div>
-                    <span id="file-chip" class="file-chip">No video selected</span>
-                </div>
-
-                <div id="drop-zone" class="drop-zone" tabindex="0">
-                    <input type="file" id="file-input" accept=".mp4,.avi,.mov,.mkv" hidden>
-                    <p class="drop-title">Drop a video here</p>
-                    <p class="drop-copy">or click to browse from your device</p>
-                </div>
-
-                <div class="video-stage">
-                    <video id="video-preview" class="video-preview hidden" controls playsinline></video>
-                    <div id="video-placeholder" class="video-placeholder">
-                        <p>Video preview will appear here.</p>
-                    </div>
-                </div>
-
-                <div class="action-row">
-                    <button id="process-btn" class="primary-btn" type="button" disabled>Start Analysis</button>
-                    <p class="hint">The selected video stays visible here and can continue playing while analysis runs.</p>
-                </div>
-            </section>
-
-            <section class="panel panel-side">
-                <div class="panel-header">
-                    <div>
-                        <p class="section-kicker">Runtime</p>
-                        <h2>Processing Status</h2>
-                    </div>
-                    <span id="status-badge" class="status-badge idle">Idle</span>
-                </div>
-
-                <div id="loading" class="processing-card hidden">
-                    <div class="processing-spinner"></div>
-                    <div>
-                        <p class="processing-title">Analyzing video</p>
-                        <p id="loading-message" class="processing-copy">Uploading and running multimodal pipeline...</p>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <article class="stat-card">
-                        <span>Total Segments</span>
-                        <strong id="metric-segments">0</strong>
-                    </article>
-                    <article class="stat-card">
-                        <span>Detected Emotions</span>
-                        <strong id="metric-emotions">-</strong>
-                    </article>
-                    <article class="stat-card">
-                        <span>Behavior Signal</span>
-                        <strong id="metric-behaviors">-</strong>
-                    </article>
-                </div>
-
-                <div class="summary-block">
-                    <p class="section-kicker">Summary</p>
-                    <p id="summary-text">Run an analysis to generate a multimodal summary.</p>
-                </div>
-            </section>
-        </main>
-
-        <section id="results-section" class="panel results-panel hidden">
-            <div class="panel-header">
+        <div class="page-shell">
+            <header class="topbar">
                 <div>
-                    <p class="section-kicker">Output</p>
-                    <h2>Multimodal Timeline</h2>
+                    <p class="eyebrow">Multimodal Analysis</p>
+                    <h1>Video Intelligence Dashboard</h1>
+                    <p class="subtitle">Upload a video, keep it playing locally, and review multimodal output after analysis.</p>
                 </div>
-            </div>
+            </header>
 
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>Speech</th>
-                            <th>Emotion</th>
-                            <th>Behavior</th>
-                            <th>Insight</th>
-                        </tr>
-                    </thead>
-                    <tbody id="timeline-body"></tbody>
-                </table>
-            </div>
-        </section>
+            <main class="layout-grid">
+                <section class="panel panel-primary">
+                    <div class="panel-header">
+                        <div>
+                            <p class="section-kicker">Input</p>
+                            <h2>Video Workspace</h2>
+                        </div>
+                        <span id="file-chip" class="file-chip">No video selected</span>
+                    </div>
+
+                    <div id="drop-zone" class="drop-zone" tabindex="0">
+                        <input type="file" id="file-input" accept=".mp4,.avi,.mov,.mkv" hidden>
+                        <p class="drop-title">Drop a video here</p>
+                        <p class="drop-copy">or click to browse from your device</p>
+                    </div>
+
+                    <div class="video-stage">
+                        <video id="video-preview" class="video-preview hidden" controls playsinline></video>
+                        <div id="video-placeholder" class="video-placeholder">
+                            <p>Video preview will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button id="process-btn" class="primary-btn" type="button" disabled>Start Analysis</button>
+                        <p class="hint">The selected video stays visible here and can continue playing while analysis runs.</p>
+                    </div>
+                </section>
+
+                <section class="panel panel-side">
+                    <div class="panel-header">
+                        <div>
+                            <p class="section-kicker">Runtime</p>
+                            <h2>Processing Status</h2>
+                        </div>
+                        <span id="status-badge" class="status-badge idle">Idle</span>
+                    </div>
+
+                    <div id="loading" class="processing-card hidden">
+                        <div class="processing-spinner"></div>
+                        <div>
+                            <p class="processing-title">Analyzing video</p>
+                            <p id="loading-message" class="processing-copy">Uploading and running multimodal pipeline...</p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <article class="stat-card">
+                            <span>Total Segments</span>
+                            <strong id="metric-segments">0</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Detected Emotions</span>
+                            <strong id="metric-emotions">-</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Behavior Signal</span>
+                            <strong id="metric-behaviors">-</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Integrity Score</span>
+                            <strong id="metric-integrity">-</strong>
+                        </article>
+                    </div>
+
+                    <div class="summary-block">
+                        <p class="section-kicker">Summary</p>
+                        <p id="summary-text">Run an analysis to generate a multimodal summary.</p>
+                    </div>
+                </section>
+            </main>
+
+            <section id="results-section" class="panel results-panel hidden">
+                <div class="panel-header results-header">
+                    <div>
+                        <p class="section-kicker">Output</p>
+                        <h2>Multimodal Timeline</h2>
+                    </div>
+                </div>
+
+                <section class="chart-panel">
+                    <div class="chart-header">
+                        <div>
+                            <p class="section-kicker">Emotion Trace</p>
+                            <h3>Emotion Confidence Over Time</h3>
+                        </div>
+                        <div id="chart-legend" class="chart-legend"></div>
+                    </div>
+                    <div id="emotion-chart-empty" class="chart-empty">Emotion graph will appear here after analysis.</div>
+                    <div id="emotion-chart" class="emotion-chart hidden"></div>
+                </section>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Speech</th>
+                                <th>Emotion</th>
+                                <th>Behavior</th>
+                                <th>Insight</th>
+                            </tr>
+                        </thead>
+                        <tbody id="timeline-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </div>
 
     <script src="/static/script.js"></script>

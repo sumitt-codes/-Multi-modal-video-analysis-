@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Window</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body data-theme="dark">
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div>
+                <p class="eyebrow">MVIS</p>
+                <h2 class="sidebar-title">Control Panel</h2>
+                <p class="sidebar-copy">Benchmark analytics based on previous validation runs.</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-link" href="/">Video Workspace</a>
+                <a class="nav-link active" href="/analytics">Analytics Window</a>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle sidebar-theme" type="button">Light Mode</button>
+        </aside>
+
+        <div class="page-shell">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Analytics Window</p>
+                    <h1>Model Performance Analytics</h1>
+                    <p class="subtitle">This page is fully isolated from live video analysis and only shows benchmark scores from previous validation runs.</p>
+                </div>
+            </header>
+
+            <section class="analytics-summary-grid">
+                <article class="summary-metric">
+                    <span>Fusion Score</span>
+                    <strong id="fusion-score-card">0%</strong>
+                    <p>Overall agreement across speech, emotion, and behavior models.</p>
+                </article>
+                <article class="summary-metric">
+                    <span>Best Model</span>
+                    <strong id="best-model-card">-</strong>
+                    <p>Highest score achieved in previous benchmark testing.</p>
+                </article>
+                <article class="summary-metric">
+                    <span>Average Accuracy</span>
+                    <strong id="average-accuracy-card">0%</strong>
+                    <p>Mean performance across all integrated models.</p>
+                </article>
+            </section>
+
+            <div class="analytics-grid">
+                <article class="analytics-card analytics-hero">
+                    <p class="section-kicker">Fusion Score</p>
+                    <h3>Overall Multimodal Fusion</h3>
+                    <div class="integrity-ring">
+                        <svg id="integrity-ring-svg" viewBox="0 0 180 180" class="integrity-svg" aria-label="Fusion score gauge"></svg>
+                        <div class="integrity-center">
+                            <strong id="analytics-integrity">0%</strong>
+                            <span>validated score</span>
+                        </div>
+                    </div>
+                    <p id="integrity-copy" class="analytics-copy">Fusion score summarizes how consistently the individual models agree during benchmark evaluation.</p>
+                </article>
+
+                <article class="analytics-card">
+                    <div class="chart-header compact">
+                        <div>
+                            <p class="section-kicker">Accuracy</p>
+                            <h3>Model Accuracy Benchmark</h3>
+                        </div>
+                    </div>
+                    <div id="model-bars" class="model-bars"></div>
+                </article>
+
+                <article class="analytics-card analytics-wide">
+                    <div class="chart-header compact">
+                        <div>
+                            <p class="section-kicker">Emotion Mix</p>
+                            <h3>Benchmark Emotion Distribution</h3>
+                        </div>
+                        <div id="donut-legend" class="chart-legend"></div>
+                    </div>
+                    <div class="donut-layout">
+                        <div class="donut-wrap">
+                            <svg id="emotion-donut" viewBox="0 0 240 240" class="donut-svg" aria-label="Emotion distribution chart"></svg>
+                            <div class="donut-center">
+                                <strong id="donut-total">0</strong>
+                                <span>test samples</span>
+                            </div>
+                        </div>
+                        <div id="emotion-breakdown" class="emotion-breakdown"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/analytics.js"></script>
+</body>
+</html>

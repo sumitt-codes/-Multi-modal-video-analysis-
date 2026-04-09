@@ -1,11 +1,38 @@
 ﻿import os
 import shutil
 import uuid
+from pathlib import Path
 import numpy as np
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 import uvicorn
+
+
+def bootstrap_ffmpeg_env() -> None:
+    if os.getenv("FFMPEG_BINARY"):
+        return
+
+    ffmpeg_on_path = shutil.which("ffmpeg")
+    if ffmpeg_on_path:
+        os.environ["FFMPEG_BINARY"] = ffmpeg_on_path
+        return
+
+    local_appdata = os.getenv("LOCALAPPDATA")
+    if not local_appdata:
+        return
+
+    winget_root = Path(local_appdata) / "Microsoft" / "WinGet" / "Packages"
+    if not winget_root.exists():
+        return
+
+    for package_dir in winget_root.glob("Gyan.FFmpeg*"):
+        candidate = package_dir / "ffmpeg-8.1-full_build" / "bin" / "ffmpeg.exe"
+        os.environ["FFMPEG_BINARY"] = str(candidate)
+        return
+
+
+bootstrap_ffmpeg_env()
 
 app = FastAPI(title="Multimodal Video Intelligence")
 
@@ -30,15 +57,18 @@ def convert_to_serializable(obj):
 
 
 def get_process_video():
-    # Import lazily so the page can open immediately even if ML models are slow to initialize.
     from backend.pipeline import process_video
-
     return process_video
 
 
 @app.get("/")
 async def root():
     return FileResponse("static/index.html")
+
+
+@app.get("/analytics")
+async def analytics_page():
+    return FileResponse("static/analytics.html")
 
 
 @app.get("/api/health")
